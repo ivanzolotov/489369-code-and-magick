@@ -174,7 +174,48 @@
 </template>
 
 <script>
-  var fireballSize = 100;
+  var fireballSize = 22;
+  var getFireballSpeed = function(left) {
+    var fireballSpeed = left ? 5 : 2;
+    return fireballSpeed;
+  }
+
+  var wizardSpeed = 3;
+  var wizardWidth = 70;
+
+  /**
+   * getWizardHeight рассчитывает высоту мага на основе wizardWidth
+   * из области видимости, а не переданного параметра, потому что такая
+   * реализация описана в постановке задачи.
+   */
+  var getWizardHeight = function() {
+    var wizardHeight = 1.337 * wizardWidth;
+    return wizardHeight;
+  }
+
+  /**
+   * getWizardX возвращает положение мага по вертикали с учётом его геометрии,
+   * чтобы гарантированно не выйти за пределы игровой области:
+   * при relativeWidth = 0 маг займёт крайнее левое положение,
+   * при relativeWidth = 1 маг займёт крайнее правое положение.
+   */
+  var getWizardX = function(width) { // тоже нужно учесть геометрию мага
+    var relativeWidth = 1 / 2;
+    var wizardX = relativeWidth * (width - wizardWidth);
+    return wizardX;
+  }
+
+  /**
+   * getWizardY возвращает положение мага по вертикали с учётом его геометрии,
+   * чтобы гарантированно не выйти за пределы игровой области:
+   * при relativeHeight = 0 маг займёт предельное нижнее положение,
+   * при relativeHeight = 1 маг займёт предельное верхнее положение.
+   */
+  var getWizardY = function(height) {
+    var relativeHeight = 2 / 3;
+    var wizardY = (1 - relativeHeight) * (height - getWizardHeight());
+    return wizardY;
+  }
 </script>
 <script src="./js/game.js"></script>
 
