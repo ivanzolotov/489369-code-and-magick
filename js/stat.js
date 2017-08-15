@@ -1,6 +1,7 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
+
   var player = 'Вы';
   var maximumScore = findMaximum(times);
 
@@ -36,6 +37,7 @@ window.renderStatistics = function (ctx, names, times) {
 
   drawRectangle(ctx, cloud);
   drawText(ctx, caption);
+
   for (var i = 0; i < names.length; i++) {
     drawText(ctx, {
       text: Math.floor(times[i]).toString(),
@@ -89,8 +91,8 @@ window.renderStatistics = function (ctx, names, times) {
   function findMaximum(numbers) {
     var maximum = -Infinity;
     for (var j = 0; j < numbers.length; j++) {
-      if (maximum < numbers[i]) {
-        maximum = numbers[i];
+      if (maximum < numbers[j]) {
+        maximum = numbers[j];
       }
     }
     return maximum;
