@@ -1,67 +1,107 @@
 'use strict';
 
 window.renderStatistics = function (ctx, names, times) {
+  var player = 'Вы';
+  var maximumScore = findMaximum(times);
 
-  var cloudXPosition = 100;
-  var cloudYPosition = 10;
-  var cloudWidth = 420;
-  var cloudHeight = 270;
-  var cloudVerticalPadding = 30;
-  var cloudHorizontalPadding = 50;
-  var columnWidth = 40;
-  var columnOffset = 50;
-  var columnMaxHeight = 150;
-  var columnHeight;
-
-  var drawCloud = function () {
-    ctx.save();
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
-    ctx.shadowOffsetX = 10;
-    ctx.shadowOffsetY = 10;
-    ctx.fillStyle = '#FFF';
-    ctx.fillRect(cloudXPosition, cloudYPosition, cloudWidth, cloudHeight);
-    ctx.restore();
-    ctx.strokeRect(cloudXPosition, cloudYPosition, cloudWidth, cloudHeight);
+  var cloud = {
+    left: 100,
+    top: 10,
+    width: 420,
+    height: 270,
+    isStroked: true,
+    fillColor: 'rgba(255, 255, 255, 1.0)',
+    shadowColor: 'rgba(0, 0, 0, 0.7)',
+    shadowOffset: 10,
+    topPadding: 20,
+    leftPadding: 50,
   };
 
-  var drawCaption = function () {
-    var lineHeight = 22;
-    ctx.fillStyle = '#000';
-    ctx.font = '16px PT Mono';
-    ctx.fillText('Ура вы победили!', cloudXPosition + cloudHorizontalPadding, cloudYPosition + cloudVerticalPadding);
-    ctx.fillText('Список результатов:', cloudXPosition + cloudHorizontalPadding, cloudYPosition + cloudVerticalPadding + lineHeight);
+  var caption = {
+    text: 'Ура вы победили!\nСписок результатов:',
+    left: cloud.left + cloud.leftPadding,
+    top: cloud.top + cloud.topPadding,
   };
 
-  var drawHistoram = function () {
-    var i;
-    var columnXPosition;
-    var columnYPosition = cloudVerticalPadding + 65;
-
-    var maximumScore = -1;
-    for (i = 0; i < times.length; i++) {
-      if (maximumScore < times[i]) {
-        maximumScore = times[i];
-      }
-    }
-
-    for (i = 0; i < names.length; i++) {
-      columnHeight = times[i] / maximumScore * columnMaxHeight;
-      columnXPosition = cloudXPosition + cloudHorizontalPadding + i * (columnWidth + columnOffset);
-
-      ctx.fillStyle = '#333';
-      ctx.fillText(~~times[i], columnXPosition, columnYPosition + columnMaxHeight - columnHeight - 5);
-      ctx.fillText(names[i], columnXPosition, columnYPosition + columnMaxHeight + 20);
-
-      ctx.fillStyle = 'rgba(0, 0, 255, ' + (Math.random() / 2 + 0.5) + ')'; // alpha ∈ [0.5; 1.0]
-      if (names[i] === 'Вы') {
-        ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-      }
-      ctx.fillRect(columnXPosition, columnYPosition + columnMaxHeight - columnHeight, columnWidth, columnHeight);
+  var histogram = {
+    left: cloud.left + cloud.leftPadding,
+    top: caption.top + 45,
+    width: 40,
+    height: 150,
+    offset: 50,
+    step: function () {
+      return this.height / maximumScore;
     }
   };
 
-  drawCloud();
-  drawCaption();
-  drawHistoram();
+  drawRectangle(ctx, cloud);
+  drawText(ctx, caption);
+  for (var i = 0; i < names.length; i++) {
+    drawText(ctx, {
+      text: Math.floor(times[i]).toString(),
+      left: histogram.left + i * (histogram.width + histogram.offset),
+      top: histogram.top + (histogram.height - times[i] * histogram.step()),
+    });
+    var bar = {
+      left: histogram.left + i * (histogram.width + histogram.offset),
+      top: histogram.top + (histogram.height - times[i] * histogram.step()) + 20,
+      width: histogram.width,
+      height: times[i] * histogram.step(),
+      fillColor: getColumnColor(names[i], player),
+    };
+    drawRectangle(ctx, bar);
+    drawText(ctx, {
+      text: names[i],
+      left: histogram.left + i * (histogram.width + histogram.offset),
+      top: histogram.top + histogram.height + 20,
+    });
+  }
 
+  function drawRectangle(context, rectangle) {
+    context.save();
+    context.shadowColor = rectangle.shadowColor;
+    context.shadowOffsetX = rectangle.shadowOffset;
+    context.shadowOffsetY = rectangle.shadowOffset;
+    context.fillStyle = rectangle.fillColor;
+    context.fillRect(rectangle.left, rectangle.top, rectangle.width, rectangle.height);
+    context.restore();
+    if (rectangle.isStroked) {
+      context.strokeRect(rectangle.left, rectangle.top, rectangle.width, rectangle.height);
+    }
+  }
+
+  function drawText(context, message) {
+    context.save();
+    var color = message.color || 'rgba(0, 0, 0, 1)';
+    var fontSize = message.fontSize || '16px';
+    var fontName = message.fontName || 'PT Mono';
+    var lineHeight = message.lineHeight || parseInt(fontSize, 10) * 1.25;
+    ctx.textBaseline = 'hanging';
+    context.fillStyle = color;
+    context.font = fontSize + ' ' + fontName;
+    var lines = message.text.split('\n');
+    for (var j = 0; j < lines.length; j++) {
+      context.fillText(lines[j], message.left, message.top + j * lineHeight);
+    }
+    context.restore();
+  }
+
+  function findMaximum(numbers) {
+    var maximum = -Infinity;
+    for (var j = 0; j < numbers.length; j++) {
+      if (maximum < numbers[i]) {
+        maximum = numbers[i];
+      }
+    }
+    return maximum;
+  }
+
+  function getColumnColor(currentPlayer, targetPlayer) {
+    var targetColor = 'rgba(255, 0, 0, 1)';
+    var getBlueColor = function () {
+      var opacity = (Math.random() / 2 + 0.5); // ∈ [0.5; 1.0]
+      return 'rgba(0, 0, 255, ' + opacity + ')';
+    };
+    return (currentPlayer === targetPlayer) ? targetColor : getBlueColor();
+  }
 };
