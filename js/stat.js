@@ -59,51 +59,52 @@ window.renderStatistics = function (ctx, names, times) {
     });
   }
 
-  function drawRectangle(context, rectangle) {
-    context.save();
-    context.shadowColor = rectangle.shadowColor;
-    context.shadowOffsetX = rectangle.shadowOffset;
-    context.shadowOffsetY = rectangle.shadowOffset;
-    context.fillStyle = rectangle.fillColor;
-    context.fillRect(rectangle.left, rectangle.top, rectangle.width, rectangle.height);
-    context.restore();
-    if (rectangle.isStroked) {
-      context.strokeRect(rectangle.left, rectangle.top, rectangle.width, rectangle.height);
-    }
-  }
-
-  function drawText(context, message) {
-    context.save();
-    var color = message.color || 'rgba(0, 0, 0, 1)';
-    var fontSize = message.fontSize || '16px';
-    var fontName = message.fontName || 'PT Mono';
-    var lineHeight = message.lineHeight || parseInt(fontSize, 10) * 1.25;
-    ctx.textBaseline = 'hanging';
-    context.fillStyle = color;
-    context.font = fontSize + ' ' + fontName;
-    var lines = message.text.split('\n');
-    for (var j = 0; j < lines.length; j++) {
-      context.fillText(lines[j], message.left, message.top + j * lineHeight);
-    }
-    context.restore();
-  }
-
-  function findMaximum(numbers) {
-    var maximum = -Infinity;
-    for (var j = 0; j < numbers.length; j++) {
-      if (maximum < numbers[j]) {
-        maximum = numbers[j];
-      }
-    }
-    return maximum;
-  }
-
-  function getColumnColor(currentPlayer, targetPlayer) {
-    var targetColor = 'rgba(255, 0, 0, 1)';
-    var getBlueColor = function () {
-      var opacity = (Math.random() / 2 + 0.5); // ∈ [0.5; 1.0]
-      return 'rgba(0, 0, 255, ' + opacity + ')';
-    };
-    return (currentPlayer === targetPlayer) ? targetColor : getBlueColor();
-  }
 };
+
+function drawRectangle(context, rectangle) {
+  context.save();
+  context.shadowColor = rectangle.shadowColor;
+  context.shadowOffsetX = rectangle.shadowOffset;
+  context.shadowOffsetY = rectangle.shadowOffset;
+  context.fillStyle = rectangle.fillColor;
+  context.fillRect(rectangle.left, rectangle.top, rectangle.width, rectangle.height);
+  context.restore();
+  if (rectangle.isStroked) {
+    context.strokeRect(rectangle.left, rectangle.top, rectangle.width, rectangle.height);
+  }
+}
+
+function drawText(context, message) {
+  context.save();
+  var color = message.color || 'rgba(0, 0, 0, 1)';
+  var fontSize = message.fontSize || '16px';
+  var fontName = message.fontName || 'PT Mono';
+  var lineHeight = message.lineHeight || parseInt(fontSize, 10) * 1.25;
+  ctx.textBaseline = 'hanging';
+  context.fillStyle = color;
+  context.font = fontSize + ' ' + fontName;
+  var lines = message.text.split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    context.fillText(lines[i], message.left, message.top + i * lineHeight);
+  }
+  context.restore();
+}
+
+function findMaximum(numbers) {
+  var maximum = -Infinity;
+  for (var i = 0; i < numbers.length; i++) {
+    if (maximum < numbers[i]) {
+      maximum = numbers[i];
+    }
+  }
+  return maximum;
+}
+
+function getColumnColor(currentPlayer, targetPlayer) {
+  var targetColor = 'rgba(255, 0, 0, 1)';
+  var getBlueColor = function () {
+    var opacity = (Math.random() / 2 + 0.5); // ∈ [0.5; 1.0]
+    return 'rgba(0, 0, 255, ' + opacity + ')';
+  };
+  return (currentPlayer === targetPlayer) ? targetColor : getBlueColor();
+}
