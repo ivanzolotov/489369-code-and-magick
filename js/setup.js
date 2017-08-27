@@ -11,24 +11,23 @@
   var setupElement = document.querySelector('.setup');
   var setupSimilarElement = setupElement.querySelector('.setup-similar');
   var similarWizardTemplate = document.getElementById('similar-wizard-template').content;
-  var wizards = [];
 
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < WIZARDS_QUANTITY; i++) {
-    addRandomWizard(wizards);
-    fragment.appendChild(makeWizardElement(wizards[i], similarWizardTemplate));
+    var wizard = makeRandomWizard();
+    fragment.appendChild(makeWizardElement(wizard, similarWizardTemplate));
   }
   setupSimilarElement.querySelector('.setup-similar-list').appendChild(fragment);
 
   setupElement.classList.remove('hidden');
   setupSimilarElement.classList.remove('hidden');
 
-  function addRandomWizard(destination) {
-    destination.push({
+  function makeRandomWizard() {
+    return {
       name: getRandomElement(WIZARD_FIRST_NAMES) + ' ' + getRandomElement(WIZARD_LAST_NAMES),
       coatColor: getRandomElement(WIZARD_COAT_COLORS),
       eyesColor: getRandomElement(WIZARD_EYES_COLORS),
-    });
+    };
   }
 
   function makeWizardElement(data, template) {
