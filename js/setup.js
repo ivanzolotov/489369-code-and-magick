@@ -121,7 +121,7 @@ wizardCoatElt.addEventListener('click', function (evt) {
 var wizardEyesElt = setupWizardElt.querySelector('.wizard-eyes');
 var inputEyesColorElt = setupElt.querySelector('input[name=eyes-color]');
 wizardEyesElt.addEventListener('click', function (evt) {
-  var color = getRanElt(WIZARD_EYES_COLORS)
+  var color = getRanElt(WIZARD_EYES_COLORS);
   evt.currentTarget.style.fill = color;
   inputEyesColorElt.value = color;
 });
@@ -129,7 +129,7 @@ wizardEyesElt.addEventListener('click', function (evt) {
 var setupFireballWrapElt = setupElt.querySelector('.setup-fireball-wrap');
 var inputFireballColorElt = setupElt.querySelector('input[name=fireball-color]');
 setupFireballWrapElt.addEventListener('click', function (evt) {
-  var color = getRanElt(FIREBALL_COLORS)
+  var color = getRanElt(FIREBALL_COLORS);
   evt.currentTarget.style['background-color'] = color;
   inputFireballColorElt.value = color;
 });
