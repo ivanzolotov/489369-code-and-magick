@@ -5,6 +5,8 @@ var WIZARD_FIRST_NAMES = ['Иван', 'Хуан Себастьян', 'Мария
 var WIZARD_LAST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var WIZARD_COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+
 
 (function () {
 
@@ -19,7 +21,6 @@ var WIZARD_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   }
   setupSimilarElement.querySelector('.setup-similar-list').appendChild(fragment);
 
-  // setupElement.classList.remove('hidden');
   setupSimilarElement.classList.remove('hidden');
 
   // Нажатие на элемент .setup-open удаляет класс hidden
@@ -34,8 +35,32 @@ var WIZARD_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
     setupElement.classList.add('hidden');
   });
 
-  // 
+  // Реализация выбора случайного цвета при клике
+  var setupWizardDomElement = setupElement.querySelector('.setup-wizard');
 
+  var wizardCoatDomElement = setupWizardDomElement.querySelector('.wizard-coat');
+  var inputCoatColorDomElement = setupElement.querySelector('input[name=coat-color]');
+  wizardCoatDomElement.addEventListener('click', function (evt) {
+    var color = getRandomElement(WIZARD_COAT_COLORS);
+    evt.currentTarget.style.fill = color;
+    inputCoatColorDomElement.value = color;
+  });
+
+  var wizardEyesDomElement = setupWizardDomElement.querySelector('.wizard-eyes');
+  var inputEyesColorDomElement = setupElement.querySelector('input[name=eyes-color]');
+  wizardEyesDomElement.addEventListener('click', function (evt) {
+    var color = getRandomElement(WIZARD_EYES_COLORS)
+    evt.currentTarget.style.fill = color;
+    inputEyesColorDomElement.value = color;
+  });
+
+  var setupFireballWrapDomElement = setupElement.querySelector('.setup-fireball-wrap');
+  var inputFireballColorDomElement = setupElement.querySelector('input[name=fireball-color]');
+  setupFireballWrapDomElement.addEventListener('click', function (evt) {
+    var color = getRandomElement(FIREBALL_COLORS)
+    evt.currentTarget.style['background-color'] = color;
+    inputFireballColorDomElement.value = color;
+  });
 
 })();
 
