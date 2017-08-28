@@ -19,8 +19,23 @@ var WIZARD_EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
   }
   setupSimilarElement.querySelector('.setup-similar-list').appendChild(fragment);
 
-  setupElement.classList.remove('hidden');
+  // setupElement.classList.remove('hidden');
   setupSimilarElement.classList.remove('hidden');
+
+  // Нажатие на элемент .setup-open удаляет класс hidden
+  // у блока setup. Нажатие на элемент .setup-close, расположенный
+  // внутри блока setup возвращает ему класс hidden.
+  var setupOpenElement = document.querySelector('.setup-open');
+  var setupCloseElement = setupElement.querySelector('.setup-close');
+  setupOpenElement.addEventListener('click', function () {
+    setupElement.classList.remove('hidden');
+  });
+  setupCloseElement.addEventListener('click', function () {
+    setupElement.classList.add('hidden');
+  });
+
+  // 
+
 
 })();
 
