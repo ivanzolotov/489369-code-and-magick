@@ -106,7 +106,7 @@ var setupWizardElt = setupElt.querySelector('.setup-wizard');
 var wizardCoatElt = setupWizardElt.querySelector('.wizard-coat');
 var inputCoatColorElt = setupElt.querySelector('input[name=coat-color]');
 wizardCoatElt.addEventListener('click', function (evt) {
-  var color = getRanElt(WIZARD_COAT_COLORS);
+  var color = getRandonElement(WIZARD_COAT_COLORS);
   evt.currentTarget.style.fill = color;
   inputCoatColorElt.value = color;
 });
@@ -114,7 +114,7 @@ wizardCoatElt.addEventListener('click', function (evt) {
 var wizardEyesElt = setupWizardElt.querySelector('.wizard-eyes');
 var inputEyesColorElt = setupElt.querySelector('input[name=eyes-color]');
 wizardEyesElt.addEventListener('click', function (evt) {
-  var color = getRanElt(WIZARD_EYES_COLORS);
+  var color = getRandonElement(WIZARD_EYES_COLORS);
   evt.currentTarget.style.fill = color;
   inputEyesColorElt.value = color;
 });
@@ -122,16 +122,16 @@ wizardEyesElt.addEventListener('click', function (evt) {
 var setupFireballWrapElt = setupElt.querySelector('.setup-fireball-wrap');
 var inputFireballColorElt = setupElt.querySelector('input[name=fireball-color]');
 setupFireballWrapElt.addEventListener('click', function (evt) {
-  var color = getRanElt(FIREBALL_COLORS);
+  var color = getRandonElement(FIREBALL_COLORS);
   evt.currentTarget.style['background-color'] = color;
   inputFireballColorElt.value = color;
 });
 
 function makeRandomWizard() {
   return {
-    name: getRanElt(WIZARD_FIRST_NAMES) + ' ' + getRanElt(WIZARD_LAST_NAMES),
-    coatColor: getRanElt(WIZARD_COAT_COLORS),
-    eyesColor: getRanElt(WIZARD_EYES_COLORS),
+    name: getRandonElement(WIZARD_FIRST_NAMES) + ' ' + getRandonElement(WIZARD_LAST_NAMES),
+    coatColor: getRandonElement(WIZARD_COAT_COLORS),
+    eyesColor: getRandonElement(WIZARD_EYES_COLORS),
   };
 }
 
@@ -143,6 +143,6 @@ function makeWizardElement(data, template) {
   return wizardElement;
 }
 
-function getRanElt(array) {
+function getRandonElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
