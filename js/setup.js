@@ -32,7 +32,7 @@ var setupCloseElt = setupElt.querySelector('.setup-close');
 var setupUserNameElt = setupElt.querySelector('.setup-user-name');
 var setupSubmitElt = setupElt.querySelector('.setup-submit');
 
-setupOpenElt.addEventListener('click', setupOpenEltClickHandler);
+setupOpenElt.addEventListener('click', openPopup);
 setupOpenElt.addEventListener('keydown', setupOpenEltKeydownHandler);
 
 function isEnterPressed(evt) {
@@ -76,19 +76,12 @@ function setupSubmitEltKeydownHandler(evt) {
   }
 }
 
-function setupOpenEltClickHandler() {
-  openPopup();
-}
-
-function setupCloseEltClickHandler() {
-  closePopup();
-}
 
 function openPopup() {
   setupElt.classList.remove('hidden');
-  setupOpenElt.removeEventListener('click', setupOpenEltClickHandler);
+  setupOpenElt.removeEventListener('click', openPopup);
   setupOpenElt.removeEventListener('keydown', setupOpenEltKeydownHandler);
-  setupCloseElt.addEventListener('click', setupCloseEltClickHandler);
+  setupCloseElt.addEventListener('click', closePopup);
   setupCloseElt.addEventListener('keydown', setupCloseEltKeydownHandler);
   document.body.addEventListener('keydown', bodyKeydownHandler);
   setupSubmitElt.addEventListener('click', setupSubmitEltClickHandler);
@@ -97,9 +90,9 @@ function openPopup() {
 
 function closePopup() {
   setupElt.classList.add('hidden');
-  setupOpenElt.addEventListener('click', setupOpenEltClickHandler);
+  setupOpenElt.addEventListener('click', openPopup);
   setupOpenElt.addEventListener('keydown', setupOpenEltKeydownHandler);
-  setupCloseElt.removeEventListener('click', setupCloseEltClickHandler);
+  setupCloseElt.removeEventListener('click', closePopup);
   setupCloseElt.removeEventListener('keydown', setupCloseEltKeydownHandler);
   document.body.removeEventListener('keydown', bodyKeydownHandler);
   setupSubmitElt.removeEventListener('click', setupSubmitEltClickHandler);
