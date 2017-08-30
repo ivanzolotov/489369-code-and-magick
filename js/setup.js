@@ -103,29 +103,34 @@ function closePopup() {
 // Реализация выбора случайного цвета при клике
 var setupWizardElt = setupElt.querySelector('.setup-wizard');
 
-var wizardCoatElt = setupWizardElt.querySelector('.wizard-coat');
-var inputCoatColorElt = setupElt.querySelector('input[name=coat-color]');
-wizardCoatElt.addEventListener('click', function (evt) {
-  var color = getRandomElement(WIZARD_COAT_COLORS);
-  evt.currentTarget.style.fill = color;
-  inputCoatColorElt.value = color;
-});
+randomizeWizardCoat();
+randomizeWizardEyes();
+randomizeWizardFireball();
 
-var wizardEyesElt = setupWizardElt.querySelector('.wizard-eyes');
-var inputEyesColorElt = setupElt.querySelector('input[name=eyes-color]');
-wizardEyesElt.addEventListener('click', function (evt) {
-  var color = getRandomElement(WIZARD_EYES_COLORS);
-  evt.currentTarget.style.fill = color;
-  inputEyesColorElt.value = color;
-});
+function randomizeWizardCoat() {
+  var wizardCoatElt = setupWizardElt.querySelector('.wizard-coat');
+  var inputCoatColorElt = setupElt.querySelector('input[name=coat-color]');
+  randomizeWizardProperty(wizardCoatElt, 'fill', inputCoatColorElt, WIZARD_COAT_COLORS);
+}
+function randomizeWizardEyes() {
+  var wizardEyesElt = setupWizardElt.querySelector('.wizard-eyes');
+  var inputEyesColorElt = setupElt.querySelector('input[name=eyes-color]');
+  randomizeWizardProperty(wizardEyesElt, 'fill', inputEyesColorElt, WIZARD_EYES_COLORS);
+}
+function randomizeWizardFireball() {
+  var setupFireballWrapElt = setupElt.querySelector('.setup-fireball-wrap');
+  var inputFireballColorElt = setupElt.querySelector('input[name=fireball-color]');
+  randomizeWizardProperty(setupFireballWrapElt, 'background-color', inputFireballColorElt, FIREBALL_COLORS);
+}
 
-var setupFireballWrapElt = setupElt.querySelector('.setup-fireball-wrap');
-var inputFireballColorElt = setupElt.querySelector('input[name=fireball-color]');
-setupFireballWrapElt.addEventListener('click', function (evt) {
-  var color = getRandomElement(FIREBALL_COLORS);
-  evt.currentTarget.style['background-color'] = color;
-  inputFireballColorElt.value = color;
-});
+function randomizeWizardProperty(clickableElement, propertyToChange, valueStoreElement, values) {
+  clickableElement.addEventListener('click', function (evt) {
+    var color = getRandomElement(values);
+    evt.currentTarget.style[propertyToChange] = color;
+    valueStoreElement.value = color;
+  });
+}
+
 
 function makeRandomWizard() {
   return {
