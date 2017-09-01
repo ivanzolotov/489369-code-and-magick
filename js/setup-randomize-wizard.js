@@ -16,11 +16,13 @@
     var inputCoatColorElt = setupDomElement.querySelector('input[name=coat-color]');
     randomizeWizardProperty(wizardCoatElt, 'fill', inputCoatColorElt, window.WIZARD.COAT_COLORS);
   }
+
   function randomizeWizardEyes() {
     var wizardEyesElt = setupWizardDomElement.querySelector('.wizard-eyes');
     var inputEyesColorElt = setupDomElement.querySelector('input[name=eyes-color]');
     randomizeWizardProperty(wizardEyesElt, 'fill', inputEyesColorElt, window.WIZARD.EYES_COLORS);
   }
+
   function randomizeWizardFireball() {
     var setupFireballWrapElt = setupDomElement.querySelector('.setup-fireball-wrap');
     var inputFireballColorElt = setupDomElement.querySelector('input[name=fireball-color]');
