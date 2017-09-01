@@ -2,7 +2,7 @@
 
 (function () {
 
-  function renderStatistics (ctx, names, times) {
+  function renderStatistics(ctx, names, times) {
     var player = 'Вы';
     var maximumScore = window.utils.findMaximum(times);
 
